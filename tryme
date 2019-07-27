@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+clear
+source './spinner'
+
+echo "ICBfICAgICAgICAgICAgICAgXyAgICAgICAgICAgICAgICAgXyAgICAgICAgICAgICAgICAgICAgICAgCiB8IHxfXyAgIF9fIF8gX19ffCB8X18gICAgX19fIF8gX18gKF8pXyBfXyAgXyBfXyAgIF9fXyBfIF9fIAogfCAnXyBcIC8gX2AgLyBfX3wgJ18gXCAgLyBfX3wgJ18gXHwgfCAnXyBcfCAnXyBcIC8gXyBcICdfX3wKIHwgfF8pIHwgKF98IFxfXyBcIHwgfCB8IFxfXyBcIHxfKSB8IHwgfCB8IHwgfCB8IHwgIF9fLyB8ICAgCiB8Xy5fXy8gXF9fLF98X19fL198IHxffCB8X19fLyAuX18vfF98X3wgfF98X3wgfF98XF9fX3xffCAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIHxffCAgICAgICAgICAgICAgICAgICAgICAgICAgICA=" | base64 --decode
+echo; echo; echo;
+
+# 1. run command in background 
+# 2. pass the PID and a message to the spinner
+ 
+$(sleep 2; exit 0) &
+spinner $! 'spin on successful command'
+
+$(sleep 2; exit 1) &
+spinner $! 'spin on failed command'
+
+$(sleep 2; exit $((RANDOM % 2))) &
+spinner $! 'conditional messages after execution' && {
+    echo '    → success!'
+} || {
+    echo '    → failure!'
+}
